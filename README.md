@@ -1,7 +1,7 @@
 # NTLMv2 Filter
 
 A J2EE filter that provides NTLMv2 authentication. This can be used for implementing Active Directory based auto login 
-functionality. It's based on (and used) the [NTLMv2 Authentication](http://ntlmv2auth.sourceforge.net/) library which 
+functionality. It's based on (and uses) the [NTLMv2 Authentication](http://ntlmv2auth.sourceforge.net/) library which 
 in turn is based on the [Liferay](https://www.liferay.com/) implementation.
 
 The filter has been modified to allow different caching and configuration implementations as well as allow selective 
