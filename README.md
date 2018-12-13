@@ -17,7 +17,7 @@ The caching implementations provided are:
 The configuration implementations provided are:
 
  * Filter parameters
- * System/Environmental properties
+ * System properties/environmental variables
  
 However, it's very simple to implement your own.
 
