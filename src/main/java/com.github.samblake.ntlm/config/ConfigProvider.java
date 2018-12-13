@@ -9,6 +9,13 @@ import com.github.samblake.ntlm.InitialisationException;
 public interface ConfigProvider {
 	
 	/**
+	 * If NTLM login should be anbled. Returning false will skip the filter.
+	 *
+	 * @return True if the filter should process the request, false otherwise
+	 */
+	boolean isEnabled();
+	
+	/**
 	 * The Active Directory domain. For example domain.local.
 	 *
 	 * @return The Active Directory domain

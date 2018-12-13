@@ -15,6 +15,11 @@ public abstract class DelegatingConfigProvider implements ConfigProvider {
 	}
 	
 	@Override
+	public boolean isEnabled() {
+		return configProvider.isEnabled();
+	}
+	
+	@Override
 	public String getDomain() throws InitialisationException {
 		return configProvider.getDomain();
 	}

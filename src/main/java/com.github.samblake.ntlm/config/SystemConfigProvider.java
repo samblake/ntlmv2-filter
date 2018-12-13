@@ -9,6 +9,12 @@ import com.github.samblake.ntlm.InitialisationException;
 public class SystemConfigProvider implements ConfigProvider {
 	
 	@Override
+	public boolean isEnabled() {
+		String value = System.getProperty("ntlm.enabled", System.getenv("ntlm.enabled"));
+		return Boolean.parseBoolean(value);
+	}
+	
+	@Override
 	public String getDomain() throws InitialisationException {
 		return getProperty("ntlm.domain");
 	}

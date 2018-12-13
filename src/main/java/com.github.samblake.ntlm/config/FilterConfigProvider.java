@@ -16,6 +16,12 @@ public class FilterConfigProvider implements ConfigProvider {
 	}
 	
 	@Override
+	public boolean isEnabled() {
+		String value = filterConfig.getInitParameter("ntlm-enabled");
+		return Boolean.parseBoolean(value);
+	}
+	
+	@Override
 	public String getDomain() {
 		return filterConfig.getInitParameter("ntlm-domain");
 	}

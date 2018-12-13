@@ -42,26 +42,33 @@ public abstract class AbstractNtlmFilter implements Filter {
 	/** NtlmManager instance. */
 	private NtlmManager ntlmManager;
 	
+	private boolean enabled;
+	
 	@Override
 	public void init(FilterConfig filterConfig) throws ServletException {
 		log.info("Initializing NTLMv2 filter");
 		
-		try {
-			cacheProvider = createCacheProvider(filterConfig);
-			cacheProvider.init(filterConfig);
+		ConfigProvider configProvider = createConfigProvider(filterConfig);
+		enabled = configProvider.isEnabled();
+		if (enabled) {
+			try {
+				cacheProvider = createCacheProvider(filterConfig);
+				cacheProvider.init(filterConfig);
+				
+				ntlmManager = createNtlmManager(configProvider);
+			}
+			catch (InitialisationException e) {
+				throw new ServletException("NTLM filter initialization failed", e);
+			}
 			
-			ntlmManager = createNtlmManager(filterConfig);
+			log.info("NTLMv2 filter initialized");
 		}
-		catch (InitialisationException e) {
-			throw new ServletException("NTLM filter initialization failed", e);
+		else {
+			log.info("NTLMv2 filter disabled");
 		}
-		
-		log.info("NTLMv2 filter initialized");
 	}
 	
-	private NtlmManager createNtlmManager(FilterConfig filterConfig) throws InitialisationException {
-		ConfigProvider configProvider = createConfigProvider(filterConfig);
-		
+	private NtlmManager createNtlmManager(ConfigProvider configProvider) throws InitialisationException {
 		String domain = configProvider.getDomain();
 		log.info("Windows domain: " + domain);
 		
@@ -110,7 +117,7 @@ public abstract class AbstractNtlmFilter implements Filter {
 	 * the chain will be called.
 	 */
 	protected boolean shouldHandleRequest(HttpServletRequest request) {
-		return true;
+		return enabled;
 	}
 	
 	private void handleRequest(FilterChain filterChain, HttpServletRequest request, HttpServletResponse response)
@@ -169,6 +176,8 @@ public abstract class AbstractNtlmFilter implements Filter {
 			}
 			catch (Exception e) {
 				log.error("NTLM authentication failed", e);
+				handleAuthenticationFailure(request, response);
+				return;
 			}
 			finally {
 				cacheProvider.remove(request.getRemoteAddr());
@@ -211,6 +220,10 @@ public abstract class AbstractNtlmFilter implements Filter {
 		}
 		
 		filterChain.doFilter(filteredReq, response);
+	}
+	
+	protected void handleAuthenticationFailure(HttpServletRequest request, HttpServletResponse response) throws IOException {
+		sendAuthenticateResponse(response);
 	}
 	
 	private void sendAuthenticateResponse(HttpServletResponse response) throws IOException {
