@@ -31,7 +31,7 @@ import static org.ntlmv2.liferay.util.HttpHeaders.WWW_AUTHENTICATE;
 public abstract class AbstractNtlmFilter implements Filter {
 	private static Logger log = LoggerFactory.getLogger(AbstractNtlmFilter.class);
 	
-	protected static final String NTLM_USER_ACCOUNT = "ntlmUserAccount";
+	public static final String NTLM_USER_ACCOUNT = "ntlmUserAccount";
 	
 	/** Random number generator for challenge creation. */
 	private SecureRandom secureRandom = new SecureRandom();
