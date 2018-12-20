@@ -27,8 +27,8 @@
 
     <dependencies>
         <dependency>
-            <artifactId>ntlmv2-filter</artifactId>
             <groupId>ch.poweredge.ntlmv2-auth</groupId>
+            <artifactId>ntlmv2-filter</artifactId>
             <version>1.0.5</version>
             <exclusions>
                 <exclusion>
