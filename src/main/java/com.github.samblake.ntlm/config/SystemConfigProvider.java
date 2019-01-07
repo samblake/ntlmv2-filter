@@ -3,8 +3,7 @@ package com.github.samblake.ntlm.config;
 import com.github.samblake.ntlm.InitialisationException;
 
 /**
- * Obtains configuration details from the
- * <a href="https://www.oracle.com/technetwork/java/filters-137243.html#70248">filter configuration</a>.
+ * Obtains configuration details from the system properties.
  */
 public class SystemConfigProvider implements ConfigProvider {
 	
