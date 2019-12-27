@@ -21,6 +21,6 @@ The configuration implementations provided are:
  
 However, it's very simple to implement your own.
 
-## Lisence
+## License
 
 This code is distributed under the LGPL license.
